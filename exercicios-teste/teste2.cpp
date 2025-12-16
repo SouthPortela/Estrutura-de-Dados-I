@@ -11,7 +11,6 @@ int main(){
 	strcpy(user.Nome, "SouthPortela");
 	user.Idade = 19;
 	Pessoa *Ptr = &user;
-
 	printf("Registro direto: %s - %d\n", user.Nome, user.Idade);
 	printf("Registro pelo ponteiro: %s - %d\n", Ptr->Nome, Ptr->Idade);
 }
