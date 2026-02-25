@@ -56,7 +56,7 @@ int verifGanhou(char Coordenada[DIM][DIM],char Simbolo)
 		return 1;
 	return 0; /* Nao ganhou o Jogo */
 }
-void main()
+int main()
 {
     setlocale(LC_ALL, "Portuguese");
 	char Velha[DIM][DIM];
