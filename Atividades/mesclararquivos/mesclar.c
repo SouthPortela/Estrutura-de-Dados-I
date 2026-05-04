@@ -6,7 +6,7 @@
 #define BUFFER 4096
 
 int main(int argc, char *argv[]){
-  if(argc < 3){
+  if(argc < 4){
     printf("Erro ao mesclar, informe arquivofinal.txt e mais dois ou mais arquivos");
     return 1;
   }
@@ -16,21 +16,27 @@ int main(int argc, char *argv[]){
     printf("Nao foi possivel abrir o arquivo");
     return 1;
   }
-  
+
   char buffer[BUFFER];
-  size_t bytes_lidos;
+  
+  for(int i=2; i < argc;i++){
+    FILE *atual = fopen(argv[i], "r");
+    if(!atual) continue;
 
-  for(int i = 2; i < argc; i++){
-    FILE *arquivo_atual = fopen(argv[i], "r");
-    if(argv[i] ==NULL){
-      printf("Erro, nao abriu a caralha do arquivo");
-      return 1;
-    }
+    int linha = 0;
+    while(fgets(buffer, BUFFER, atual)){
+      linha++;
+      if(linha <= 2){
+        continue;
+      }
 
-    while((bytes_lidos = fread(buffer, 1, sizeof(buffer), arquivo_atual)) > 0){
-      fwrite(buffer, 1, bytes_lidos, saida);
+      if(strncmp(buffer, "EF", 2) == 0){
+        continue;
+      }
+      fputs(buffer, saida);
     }
-    fclose(arquivo_atual);
+    fclose(atual);
+
   }
   fclose(saida);
   printf("todos os arquivos foram mesclados no arquivo %s", argv[1]);
